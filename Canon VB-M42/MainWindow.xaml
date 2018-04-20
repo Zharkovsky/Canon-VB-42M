@@ -1,0 +1,73 @@
+﻿<Window x:Class="Canon_VB_M42.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:Canon_VB_M42"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="1200">
+    <Window.Resources>
+        <local:ImageConverter x:Key="ImageConverter"/>
+        <local:PlatesConverter x:Key="PlatesConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Image x:Name="ImageF" Width="auto" Height="auto" 
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center"
+                   Source="{Binding Path=ImageFrame, Mode=OneWay, Converter={StaticResource ImageConverter}}">
+            <Image.InputBindings>
+                <MouseBinding Gesture="RightClick"
+                                  Command="{Binding Path=SaveCommand}" 
+                                  CommandParameter="{Binding Path=ImageFrame}" />
+
+                <MouseBinding Gesture="LeftClick"
+                                  Command="{Binding Path=OffsetCommand}" 
+                                  CommandParameter="{Binding ElementName=ImageF}" />
+                <MouseBinding Command="{Binding Path=ZoomInCommand}">
+                    <MouseBinding.Gesture>
+                        <local:MouseWheelUp/>
+                    </MouseBinding.Gesture>
+                </MouseBinding>
+                <MouseBinding Command="{Binding Path=ZoomOutCommand}">
+                    <MouseBinding.Gesture>
+                        <local:MouseWheelDown/>
+                    </MouseBinding.Gesture>
+                </MouseBinding>
+            </Image.InputBindings>
+        </Image>
+        <TextBlock Width="10" Height="10" TextAlignment="Center" Foreground="Wheat">●</TextBlock>
+
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="←" Grid.Row="0" Grid.Column="0" Click="Button_Click" ClickMode="Press" />
+            <Button Content="→" Grid.Row="1" Grid.Column="0" Click="Button_Click_1"/>
+            <Button Content="↑" Grid.Row="0" Grid.Column="1" Click="Button_Click_2"/>
+            <Button Content="↓" Grid.Row="1" Grid.Column="1" Click="Button_Click_3"/>
+            <Button Content="+" Grid.Row="0" Grid.Column="2" Click="Button_Click_4"/>
+            <Button Content="-" Grid.Row="1" Grid.Column="2" Click="Button_Click_5"/>
+            <Button Content="StepTo(-17000,-9000,320) 10%" Grid.Row="0" Grid.Column="3" Click="Button_Click_6"/>
+            <Button Content="GoToPosition(17000,1000,6040)" Grid.Row="1" Grid.Column="3" Click="Button_Click_9"/>
+            <Button Content="ZoomOffsetBySteps(5)" Grid.Row="0" Grid.Column="4" Click="Button_Click_7"/>
+            <Button Content="UpdateCurrentPosition()" Grid.Row="1" Grid.Column="4" Click="Button_Click_10"/>
+            <Button Content="PanTiltOffsetPercentage()" Grid.Row="0" Grid.Column="5" Click="Button_Click_8"/>
+        </Grid>
+
+    </Grid>
+</Window>
